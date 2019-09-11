@@ -59,12 +59,14 @@ with open('center of mass.csv', mode='r') as csvfile:
                 temptime[locations] =   x['rows'][0]['elements'][0]['duration']['value']
             
             #calculates the difference in time
-            timedifference = min(temptime['Megahospital'] - (temptime['Met']*0.5 + temptime['Ouelette']*0.5),temptime['Met'])
+            old = min(temptime['Met'],temptime['Ouelette'],temptime['Leamington'])
+            new = min(temptime['Megahospital'],temptime['Leamington'])
+            timedifference = new - old
             print (timedifference)
             row.append(str(timedifference))
             final.append(row)
-    #writes the file into a new file called 'results.csv'
-    with open('results.csv','w') as writeFile:
+    #writes the file into a new file called 'emresults.csv'
+    with open('emresults.csv','w') as writeFile:
         writer = csv.writer(writeFile,dialect='excel')
         writer.writerows(final)
     writeFile.close()
